@@ -116,9 +116,9 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
 
    })
    .then((result) => {
-    console.log(result.rows)
+    //console.log(result.rows)
     const articlesLookup = createArticlesLookupObj(result.rows)
-    console.log(articlesLookup)
+    //console.log(articlesLookup)
 
     const formattedComments = commentData.map((comment) => {
       
@@ -132,7 +132,7 @@ const seed = ({ topicData, userData, articleData, commentData }) => {
         finalComment.created_at
       ];
     });
-    console.log(formattedComments)
+    //console.log(formattedComments)
 
     const insertCommentQuery = format (
       `INSERT INTO comments

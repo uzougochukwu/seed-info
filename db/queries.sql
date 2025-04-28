@@ -1,6 +1,6 @@
 \c nc_news
 
--- select * from users
+select * from users
 
 -- select * from articles where topic = 'coding'
 
@@ -10,4 +10,4 @@
 
 -- select title from articles where author = 'grumpy19'
 
-select body from comments where votes > 10
+-- select body from comments where votes > 10
