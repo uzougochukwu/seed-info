@@ -1,5 +1,8 @@
-const t = require("../endpoints.json")
+const db = require("../db/connection")
 
-exports.getAPI = () => {
-    return t
+exports.selectTopics = () => {
+ return db.query("SELECT * FROM topics;")
+ .then(( { rows }) => {
+    return rows;
+ })
 }
