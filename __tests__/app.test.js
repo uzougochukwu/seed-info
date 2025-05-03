@@ -33,8 +33,10 @@ describe("GET /api/topics", () => {
     .expect(200)
     .then((response) => {
       const body = response.body
-      const topics = body.rows
+      const topics = body.topicsData
+
       topics.forEach((topic) => {
+        expect(topic.length).not.toEqual(0);
         expect(topic).toHaveProperty('slug');
         expect(topic).toHaveProperty('description');
       })
