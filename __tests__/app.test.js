@@ -18,14 +18,9 @@ describe("GET /api", () => {
     return request(app)
       .get("/api")
       .expect(200)
-      // .then(({ body: { endpoints } }) => {
-      //   expect(endpoints).toEqual(endpointsJson);
-      // });
       .then((response) => { 
         const body = response.body
         const endpoints = body.endpoints
-        //console.log(body)
-        //console.log(endpoints)
         expect(endpoints).toEqual(endpointsJson);
       });
   });
@@ -36,18 +31,9 @@ describe("GET /api/topics", () => {
     return request(app)
     .get("/api/topics")
     .expect(200)
-    // .then(({body: {topics}}) => {
-    //   console.log(topics)
-    //   expect(topics).toHaveLength(3);
-    //   topics.forEach((topic) => {
-    //     expect(topic).toHaveProperty('slug');
-    //     expect(topic).toHaveProperty('description');
-    //   })
-    // })
     .then((response) => {
       const body = response.body
       const topics = body.rows
-      //console.log(response)
       topics.forEach((topic) => {
         expect(topic).toHaveProperty('slug');
         expect(topic).toHaveProperty('description');
@@ -62,9 +48,6 @@ describe("GET /api/articles/:article_id", () => {
     .get("/api/articles/1")
     .expect(200)
     .then((response) => {
-      //const body = response.body
-      // const article = body.article
-      //console.log(response)
       expect(response.body.article.article_id).toBe(1)
       expect(response.body.article.title).toBe("Living in the shadow of a great man")
       expect(response.body.article.topic).toBe("mitch")
@@ -85,14 +68,9 @@ test("returns an error message when given an incorrect endpoint", () => {
   return request(app)
   .get("/api/notAnEndpoint")
   .expect(404)
-  // .then(({ body }) => {
-  //   expect(body.msg).toBe("Not Found")
-  // })
-  .then((response) => {
-    //const errMsg = response.body.msg
-    const errMsg = response.res.statusMessage
-    //console.log(response.res.statusMessage)
 
+  .then((response) => {
+    const errMsg = response.res.statusMessage
     expect(errMsg).toBe("Not Found");
   })
 })

@@ -13,14 +13,7 @@ exports.selectArticleById = (article_id) => {
    .query(`select * from articles where article_id = $1 `, [article_id])
    .then((result) => {
 
-      // const article = result.rows[0];
-      // return article
       return result.rows[0]
    })
- 
-   // return db.query("select * from articles where article_id = $1 ",
-   //  [article_id])
-   // .then((result) => {
-   //    return result
-   // })
+
 }
