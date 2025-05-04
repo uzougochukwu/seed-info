@@ -1,8 +1,10 @@
 
+const { response } = require("express")
 const endpointsArray = require("../endpoints.json")
 const { selectTopics,
     selectArticleById,
-    selectArticles
+    selectArticles,
+    selectCommentsByArticleId
  } = 
 require("../models/nc_news.models")
 
@@ -33,5 +35,14 @@ exports.getArticles = (request, response, next) => {
     selectArticles().then(( articlesData ) => {
         response.status(200).send({ articlesData })
     })
+
+}
+
+exports.getCommentsByArticleId = (request, response, next) => {
+    const { article_id } = request.params 
+
+        return selectCommentsByArticleId(article_id).then((comment) => {
+            response.status(200).send({ comment })
+        })
 
 }
