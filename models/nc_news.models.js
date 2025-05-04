@@ -10,10 +10,23 @@ exports.selectTopics = () => {
 exports.selectArticleById = (article_id) => {
  
     return db
-   .query(`select * from articles where article_id = $1 `, [article_id])
+   .query(`select * from articles where article_id = $1; `, [article_id])
    .then((result) => {
 
       return result.rows[0]
    })
 
+}
+
+exports.selectArticles = () => {
+   return db.query(`select first.author, first.title, first.article_id, 
+      first.topic, first.created_at, first.votes, first.article_img_url,
+       count(second.comment_id) from articles as first 
+       left join comments as second on second.article_id = first.article_id 
+       group by first.author, first.title, first.article_id, first.topic, 
+       first.created_at, first.votes, first.article_img_url 
+       order by first.created_at desc;`)
+.then(( { rows }) => {
+   return rows;   
+})
 }

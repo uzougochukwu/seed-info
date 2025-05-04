@@ -64,6 +64,31 @@ describe("GET /api/articles/:article_id", () => {
     })
   })
 
+describe("GET /api/articles", () => {
+  test("200: Responds with an array of article objects", () => {
+    return request(app)
+    .get("/api/articles")
+    .expect(200)
+    .then((response) => {
+      const body = response.body
+      const articles = body.articlesData
+      
+      articles.forEach((article) => {
+        expect(article.length).not.toEqual(0);
+        expect(article).toHaveProperty('author');
+        expect(article).toHaveProperty('title');
+        expect(article).toHaveProperty('article_id');
+        expect(article).toHaveProperty('topic');
+        expect(article).toHaveProperty('created_at');
+        expect(article).toHaveProperty('votes');
+        expect(article).toHaveProperty('article_img_url');
+        expect(article).toHaveProperty('count');
+      })
+
+    })
+  })
+})
+
 
 describe("Error Handling", () => {
 test("returns an error message when given an incorrect endpoint", () => {
