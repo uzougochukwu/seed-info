@@ -18,7 +18,6 @@ exports.getTopics = (request, response, next) =>
     selectTopics().then(( topicsData ) => {
     response.status(200).send({ topicsData })        
     })
-
 }
 
 exports.getArticleById = (request, response, next) => {
@@ -27,7 +26,6 @@ exports.getArticleById = (request, response, next) => {
     return selectArticleById(article_id).then((article) => {
         response.status(200).send({ article })
     })
-
 }
 
 exports.getArticles = (request, response, next) => {
@@ -44,5 +42,4 @@ exports.getCommentsByArticleId = (request, response, next) => {
         return selectCommentsByArticleId(article_id).then((comment) => {
             response.status(200).send({ comment })
         })
-
 }
