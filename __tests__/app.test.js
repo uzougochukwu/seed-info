@@ -50,6 +50,7 @@ describe("GET /api/articles/:article_id", () => {
     .get("/api/articles/1")
     .expect(200)
     .then((response) => {
+      //console.log(response)
       expect(response.body.article.article_id).toBe(1)
       expect(response.body.article.title).toBe("Living in the shadow of a great man")
       expect(response.body.article.topic).toBe("mitch")
@@ -84,38 +85,32 @@ describe("GET /api/articles", () => {
         expect(article).toHaveProperty('article_img_url');
         expect(article).toHaveProperty('count');
       })
-
     })
   })
 })
 
 
 
-// describe("GET /api/articles/:article_id/comments", () => {
-//   test("200: Responds with an array of comments for the given article_id", () => {
-//     return request(app)
-//     .get("/api/articles/:article_id/comments")
-//     .expect(200)
-//     .then((response) => {
-//       const body = response.body
-//       const comments = body.commentsData
+describe("GET /api/articles/:article_id/comments", () => {
+  test("200: Responds with an array of comments for the given article_id", () => {
+     return request(app)
+    .get("/api/articles/3/comments")
+    .expect(200)
+    .then((response) => {
+      const comments = response.body.comment.rows
       
-//       comments.forEach((comment) => {
-//         expect(comment.length).not.toEqual(0);
-//         expect(comment).toHaveProperty('author');
-//         expect(comment).toHaveProperty('title');
-//         expect(comment).toHaveProperty('article_id');
-//         expect(comment).toHaveProperty('topic');
-//         expect(comment).toHaveProperty('created_at');
-//         expect(comment).toHaveProperty('votes');
-//         expect(comment).toHaveProperty('article_img_url');
-//         expect(comment).toHaveProperty('count');
-//       })
-//     })
-//   })
-// })
-
-
+      comments.forEach((comment) => {
+        expect(comment.length).not.toEqual(0);
+        expect(comment).toHaveProperty('body');
+        expect(comment).toHaveProperty('author');
+        expect(comment).toHaveProperty('article_id');
+        expect(comment).toHaveProperty('created_at');
+        expect(comment).toHaveProperty('votes');
+        expect(comment).toHaveProperty('comment_id');
+      })
+    })
+  })
+})
 
 
 
