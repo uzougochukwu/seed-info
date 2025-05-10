@@ -4,9 +4,12 @@ const endpointsArray = require("../endpoints.json")
 const { selectTopics,
     selectArticleById,
     selectArticles,
-    selectCommentsByArticleId
+    selectCommentsByArticleId,
+    addCommentForArticle,
+    changeVotesForArticle
  } = 
 require("../models/nc_news.models")
+const { commentData } = require("../db/data/test-data")
 
 exports.displayAPI = (request, response, next) => 
 {
@@ -42,4 +45,20 @@ exports.getCommentsByArticleId = (request, response, next) => {
         return selectCommentsByArticleId(article_id).then((comment) => {
             response.status(200).send({ comment })
         })
+}
+
+exports.postCommentForArticle = (request, response, next) => {
+    const { article_id } = request.params
+    const{ username, body } = request.body
+    addCommentForArticle(article_id, username, body).then((newComment) => {
+        response.status(201).send({ newComment })
+    })
+}
+
+exports.modifyVotesForArticle = (request, response, next) => {
+    const { article_id } = request.params
+    const { inc_votes: newVote } = request.body
+    changeVotesForArticle(article_id, newVote).then((article) => {
+        response.status(201).send({ article })
+    })
 }
