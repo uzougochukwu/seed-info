@@ -223,6 +223,17 @@ test("201: Responds with an object showing updated article when we add votes to 
 })
 })
 
+describe("DELETE /api/comments/:comment_id", () => {
+  test("204: Responds with nothing after deleting comment", () => {
+    return request(app)
+    .delete("/api/comments/3")
+    .expect(204)
+    .then((response) => {
+      
+
+    })
+  })
+})
 
 
 describe("Error Handling", () => {

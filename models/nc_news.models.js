@@ -67,3 +67,10 @@ exports.changeVotesForArticle = (article_id, newVote ) => {
       return result.rows[0]
    })
 }
+
+exports.deleteComment = (comment_id) => {
+   return db
+   .query(`delete from comments
+      where comment_id = $1
+      returning *;`, [comment_id])
+}
