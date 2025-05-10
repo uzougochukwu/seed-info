@@ -74,3 +74,8 @@ exports.deleteComment = (comment_id) => {
       where comment_id = $1
       returning *;`, [comment_id])
 }
+
+exports.selectUsers = () => {
+   return db
+   .query(`select * from users;`)
+}
