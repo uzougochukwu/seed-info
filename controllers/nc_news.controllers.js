@@ -6,7 +6,8 @@ const { selectTopics,
     selectArticles,
     selectCommentsByArticleId,
     addCommentForArticle,
-    changeVotesForArticle
+    changeVotesForArticle,
+    deleteComment
  } = 
 require("../models/nc_news.models")
 const { commentData } = require("../db/data/test-data")
@@ -60,5 +61,13 @@ exports.modifyVotesForArticle = (request, response, next) => {
     const { inc_votes: newVote } = request.body
     changeVotesForArticle(article_id, newVote).then((article) => {
         response.status(201).send({ article })
+    })
+}
+
+exports.removeComment = (request, response, next) => {
+    const { comment_id } = request.params
+
+    deleteComment(comment_id).then(( ) => {
+        response.status(204).send()
     })
 }
