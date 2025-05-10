@@ -42,3 +42,28 @@ exports.selectCommentsByArticleId = (article_id) => {
          return result;
        })
 }
+
+exports.addCommentForArticle = (article_id, username, body) => {
+   
+   return db
+   .query(`insert into comments (article_id, author, body)
+      values
+      ($1, $2, $3) returning *;`,
+   [article_id, username, body]).then((result) => {
+      return result.rows[0]
+
+
+   })
+}
+
+exports.changeVotesForArticle = (article_id, newVote ) => {
+
+   return db
+   .query(`update articles 
+      set votes = greatest(votes + $1, 0)
+      where article_id = $2
+      returning *;`,
+   [newVote, article_id]).then((result) => {
+      return result.rows[0]
+   })
+}

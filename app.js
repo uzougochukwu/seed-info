@@ -3,7 +3,10 @@ const { displayAPI,
         getTopics,
         getArticleById,
         getArticles, 
-        getCommentsByArticleId} 
+        getCommentsByArticleId,
+        postCommentForArticle,
+        modifyVotesForArticle
+      } 
         = require ("./controllers/nc_news.controllers")
 const express = require("express")
 const app = express();
@@ -20,6 +23,10 @@ app.get("/api/articles/:article_id", getArticleById)
 app.get("/api/articles", getArticles)
 
 app.get("/api/articles/:article_id/comments", getCommentsByArticleId)
+
+app.post("/api/articles/:article_id/comments", postCommentForArticle)
+
+app.patch("/api/articles/:article_id", modifyVotesForArticle)
 
 app.use((err, req, res, next) => {
 

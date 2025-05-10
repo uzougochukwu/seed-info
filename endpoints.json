@@ -63,5 +63,44 @@
         }
       ]
     }
+  },
+  "POST /api/articles/:article_id/comments": {
+    "description": "adds a comment for an article with a specified id",
+    "exampleRequest": {
+      "username": "icellusedkars",
+      "body":"This gif is awesome"
+    },    
+    "exampleResponse": {
+      "newComment": [
+        {
+          "comment_id": 19,
+          "article_id": 3,
+          "body": "This gif is awesome",
+          "votes": 0,
+          "author": "icellusedkars",
+          "created_at": "2025-05-10T12:18:41.201Z"
+        }
+      ]
+    }
+  },
+  "PATCH /api/articles/:article_id": {
+    "description": "adds votes for an article with a specified id",
+    "exampleRequest": {
+      "inc_votes": 5
+    },    
+    "exampleResponse": {
+      "article": [
+        {
+          "article_id": 4,
+          "title": "Student SUES Mitch!",
+          "topic": "mitch",
+          "author": "rogersop",
+          "body": "We all love Mitch and his wonderful, unique typing style. However, the volume of his typing has ALLEGEDLY burst another students eardrums, and they are now suing for damages",
+          "created_at": "2020-05-06T01:14:00.000Z",
+          "votes": 5,
+          "article_img_url": "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
+        }
+      ]
+    }
   }
 }
