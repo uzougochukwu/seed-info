@@ -243,7 +243,7 @@ describe("GET /api/users", () => {
     .then((response) => {
       const users = response.body.rows
     
-      console.log(users)
+  
       users.forEach((user) => {
         expect(user.length).not.toEqual(0);
         expect(user).toHaveProperty('username');
