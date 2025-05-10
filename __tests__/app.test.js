@@ -235,6 +235,26 @@ describe("DELETE /api/comments/:comment_id", () => {
   })
 })
 
+describe("GET /api/users", () => {
+  test("200: Responds with an array of user objects", () => {
+    return request(app)
+    .get("/api/users")
+    .expect(200)
+    .then((response) => {
+      const users = response.body.rows
+    
+  
+      users.forEach((user) => {
+        expect(user.length).not.toEqual(0);
+        expect(user).toHaveProperty('username');
+        expect(user).toHaveProperty('name');
+        expect(user).toHaveProperty('avatar_url');
+    
+      })
+    })
+  })
+})
+
 
 describe("Error Handling", () => {
 test("returns an error message when given an incorrect endpoint", () => {

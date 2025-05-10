@@ -7,7 +7,8 @@ const { selectTopics,
     selectCommentsByArticleId,
     addCommentForArticle,
     changeVotesForArticle,
-    deleteComment
+    deleteComment,
+    selectUsers
  } = 
 require("../models/nc_news.models")
 const { commentData } = require("../db/data/test-data")
@@ -69,5 +70,12 @@ exports.removeComment = (request, response, next) => {
 
     deleteComment(comment_id).then(( ) => {
         response.status(204).send()
+    })
+}
+
+exports.getUsers = (request, response, next) => {
+
+    selectUsers().then(( users ) => {
+        response.status(200).send(users)
     })
 }
