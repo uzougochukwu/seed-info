@@ -91,6 +91,35 @@ describe("GET /api/articles", () => {
   })
 })
 
+// describe("GET /api/articles?sort_by=title&order_by=desc", () => {
+//   test("200: Responds with an array of sorted article objects", () => {
+//     return request(app)
+//     .get("/api/articles:title")
+//     .expect(200)
+//     .then((response) => {
+//       const body = response.body
+//       const articles = body.articlesData
+      
+//       console.log(response)
+
+//       articles.forEach((article) => {
+//         expect(article.length).not.toEqual(0);
+//         expect(article).toHaveProperty('author');
+//         expect(article).toHaveProperty('title');
+//         expect(article).toHaveProperty('article_id');
+//         expect(article).toHaveProperty('topic');
+//         expect(article).toHaveProperty('created_at');
+//         expect(article).toHaveProperty('votes');
+//         expect(article).toHaveProperty('article_img_url');
+//         expect(article).toHaveProperty('count');
+//       })
+//     })
+//   })
+// })
+
+
+
+
 
 
 

@@ -31,6 +31,53 @@ exports.selectArticles = () => {
 })
 }
 
+// comment out selectArticles, create a query str and add to it, depending on
+// the values in the first and second parameters (and whether or not they exist)
+// use greenlist
+
+
+
+
+
+
+
+exports.selectArticlesSort = (sort_by) => {
+
+   const allowedInputs = ["author", "title", "article_id", "topic", "created_at", "votes", "article_img_url", "count", "asc", "desc"]
+ 
+
+   let selectArticlesQueryStr = `select first.author, first.title as title, first.article_id, 
+   first.topic, first.created_at, first.votes, first.article_img_url,
+    count(second.comment_id) as count from articles as first 
+    left join comments as second on second.article_id = first.article_id 
+    group by first.author, first.title, first.article_id, first.topic, 
+    first.created_at, first.votes, first.article_img_url order by $1 ;`
+
+// let queryValues = []
+
+// // used to be includes(sort_by, order)
+
+//    if (!allowedInputs.includes(sort_by)) {
+// return Promise.reject({ status: 404, msg: "Invalid Input" })
+//    }
+
+// queryValues.push(sort_by)
+// queryValues.push(order)
+
+// selectArticlesQueryStr += ` order by $1 ;`
+ 
+// selectArticlesQueryStr += ` $2 ;`
+
+//must add the descending afterwards
+
+   return db.query(`${selectArticlesQueryStr}`, [sort_by])
+.then(( { rows }) => {
+   return rows;   
+})
+
+}
+
+
 
 exports.selectCommentsByArticleId = (article_id) => {
    return db

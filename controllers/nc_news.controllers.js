@@ -8,7 +8,8 @@ const { selectTopics,
     addCommentForArticle,
     changeVotesForArticle,
     deleteComment,
-    selectUsers
+    selectUsers,
+    selectArticlesSort
  } = 
 require("../models/nc_news.models")
 const { commentData } = require("../db/data/test-data")
@@ -77,5 +78,14 @@ exports.getUsers = (request, response, next) => {
 
     selectUsers().then(( users ) => {
         response.status(200).send(users)
+    })
+}
+
+exports.getSortedArticles = (request, response, next) => {
+
+    const {sort_by, order_by} = request.params
+
+    selectArticlesSort(sort_by, order_by).then(( articles ) => {
+        response.status(200).send(articles)
     })
 }
