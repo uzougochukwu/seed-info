@@ -1,7 +1,7 @@
 const db = require("../db/connection")
 
 exports.selectTopics = () => {
- return db.query("SELECT * FROM topics;")
+ return db.query("SELECT * FROM topics ;")
  .then(( { rows }) => {
     return rows;
  })
@@ -37,43 +37,59 @@ exports.selectArticles = () => {
 
 
 
-
-
-
-
 exports.selectArticlesSort = (sort_by) => {
 
-   const allowedInputs = ["author", "title", "article_id", "topic", "created_at", "votes", "article_img_url", "count", "asc", "desc"]
- 
-
-   let selectArticlesQueryStr = `select first.author, first.title as title, first.article_id, 
+let queryStr = `select first.author, first.article_id, 
    first.topic, first.created_at, first.votes, first.article_img_url,
     count(second.comment_id) as count from articles as first 
     left join comments as second on second.article_id = first.article_id 
     group by first.author, first.title, first.article_id, first.topic, 
     first.created_at, first.votes, first.article_img_url `
+ 
+let queryArgs = []
 
-let queryValues = []
+const promiseArray = []
+
+let queryCount = 0
+
+const validSortQueries = ["author", "title", "article_id", "topic", "created_at", "votes", "article_img_url", "count"]
+
+if(sort_by && validSortQueries.includes(sort_by)) {
+   queryStr += ` order by first.${sort_by} desc ;`
+}
+
+promiseArray.unshift(db.query(queryStr, queryArgs))
+
+return Promise.all(promiseArray).then((results) => {
+   const queryPromise = results[0]
+
+   console.log(queryPromise.rows)
+
+   return queryPromise.rows
+})
+
+
+
 
 // used to be includes(sort_by, order)
 
-   if (!allowedInputs.includes(sort_by)) {
-return Promise.reject({ status: 404, msg: "Invalid Input" })
-   }
+//    if (!allowedInputs.includes(sort_by)) {
+// return Promise.reject({ status: 404, msg: "Invalid Input" })
+//    }
 
-queryValues.push(sort_by)
-// queryValues.push(order)
+// queryValues.push(sort_by)
+// // queryValues.push(order)
 
-selectArticlesQueryStr += ` order by ${sort_by} ;`
+// selectArticlesQueryStr += ` order by ${sort_by} ;`
  
-// selectArticlesQueryStr += ` $2 ;`
+// // selectArticlesQueryStr += ` $2 ;`
 
-//must add the descending afterwards
+// //must add the descending afterwards
 
-   return db.query(`${selectArticlesQueryStr}`, [sort_by])
-.then(( { rows }) => {
-   return rows;   
-})
+//    return db.query(`${selectArticlesQueryStr}`, [sort_by])
+// .then(( { rows }) => {
+//    return rows;   
+// })
 
 }
 

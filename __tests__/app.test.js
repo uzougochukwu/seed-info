@@ -37,6 +37,8 @@ describe("GET /api/topics", () => {
       const body = response.body
       const topics = body.topicsData
 
+     
+
       topics.forEach((topic) => {
         expect(topic.length).not.toEqual(0);
         expect(topic).toHaveProperty('slug');
@@ -90,11 +92,13 @@ describe("GET /api/articles", () => {
     })
   })
 })
+// need to move this test into the above block where it says get /api/articles
+// even after removing first.title from selectArticlesSort, the articlesData is the same
 
 describe("GET /api/articles?sort_by=title&order_by=desc", () => {
   test("200: Responds with an array of sorted article objects", () => {
     return request(app)
-    .get("/api/articles?sort_by=title")
+    .get("/api/articles?sort_by=author")
     .expect(200)
     .then((response) => {
       const body = response.body
