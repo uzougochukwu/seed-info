@@ -51,20 +51,20 @@ exports.selectArticlesSort = (sort_by) => {
     count(second.comment_id) as count from articles as first 
     left join comments as second on second.article_id = first.article_id 
     group by first.author, first.title, first.article_id, first.topic, 
-    first.created_at, first.votes, first.article_img_url order by $1 ;`
+    first.created_at, first.votes, first.article_img_url `
 
-// let queryValues = []
+let queryValues = []
 
-// // used to be includes(sort_by, order)
+// used to be includes(sort_by, order)
 
-//    if (!allowedInputs.includes(sort_by)) {
-// return Promise.reject({ status: 404, msg: "Invalid Input" })
-//    }
+   if (!allowedInputs.includes(sort_by)) {
+return Promise.reject({ status: 404, msg: "Invalid Input" })
+   }
 
-// queryValues.push(sort_by)
+queryValues.push(sort_by)
 // queryValues.push(order)
 
-// selectArticlesQueryStr += ` order by $1 ;`
+selectArticlesQueryStr += ` order by ${sort_by} ;`
  
 // selectArticlesQueryStr += ` $2 ;`
 

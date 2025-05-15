@@ -23,7 +23,7 @@ app.get("/api/topics", getTopics)
 
 app.get("/api/articles/:article_id", getArticleById)
 
-app.get("/api/articles", getArticles)
+app.get("/api/articles", getArticles, getSortedArticles)
 
 app.get("/api/articles/:article_id/comments", getCommentsByArticleId)
 
@@ -35,7 +35,7 @@ app.delete("/api/comments/:comment_id", removeComment)
 
 app.get("/api/users", getUsers)
 
-app.get("/api/articles:sort_by", getSortedArticles)
+// app.get("/api/articles?sort_by=title", getSortedArticles)
 
 app.use((err, req, res, next) => {
 
