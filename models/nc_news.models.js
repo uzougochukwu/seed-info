@@ -39,7 +39,7 @@ exports.selectArticleById = (article_id) => {
 // changed from selectArticlesSort
 exports.selectArticles = (sort_by) => {
 
-let queryStr = `select first.author, first.article_id, 
+let queryStr = `select first.author, first.title, first.article_id, 
    first.topic, first.created_at, first.votes, first.article_img_url,
     count(second.comment_id) as count from articles as first 
     left join comments as second on second.article_id = first.article_id 
@@ -55,7 +55,7 @@ const promiseArray = []
 const validSortQueries = ["author", "title", "article_id", "topic", "created_at", "votes", "article_img_url", "count"]
 
 if(sort_by && validSortQueries.includes(sort_by)) {
-   queryStr += ` order by first.${sort_by} desc ;`
+   queryStr += ` order by first.${sort_by} asc ;`
 }
 
 promiseArray.unshift(db.query(queryStr, queryArgs))
