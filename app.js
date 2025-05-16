@@ -23,7 +23,9 @@ app.get("/api/topics", getTopics)
 
 app.get("/api/articles/:article_id", getArticleById)
 
-app.get("/api/articles", getArticles, getSortedArticles)
+app.get("/api/articles", getArticles)
+
+// removed getSortedArticles from above
 
 app.get("/api/articles/:article_id/comments", getCommentsByArticleId)
 

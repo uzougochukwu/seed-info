@@ -18,26 +18,26 @@ exports.selectArticleById = (article_id) => {
 
 }
 
-exports.selectArticles = () => {
-   return db.query(`select first.author, first.title, first.article_id, 
-      first.topic, first.created_at, first.votes, first.article_img_url,
-       count(second.comment_id) from articles as first 
-       left join comments as second on second.article_id = first.article_id 
-       group by first.author, first.title, first.article_id, first.topic, 
-       first.created_at, first.votes, first.article_img_url 
-       order by first.created_at desc;`)
-.then(( { rows }) => {
-   return rows;   
-})
-}
+// exports.selectArticles = () => {
+//    return db.query(`select first.author, first.title, first.article_id, 
+//       first.topic, first.created_at, first.votes, first.article_img_url,
+//        count(second.comment_id) from articles as first 
+//        left join comments as second on second.article_id = first.article_id 
+//        group by first.author, first.title, first.article_id, first.topic, 
+//        first.created_at, first.votes, first.article_img_url 
+//        order by first.created_at desc;`)
+// .then(( { rows }) => {
+//    return rows;   
+// })
+// }
 
 // comment out selectArticles, create a query str and add to it, depending on
 // the values in the first and second parameters (and whether or not they exist)
 // use greenlist
 
 
-
-exports.selectArticlesSort = (sort_by) => {
+// changed from selectArticlesSort
+exports.selectArticles = (sort_by) => {
 
 let queryStr = `select first.author, first.article_id, 
    first.topic, first.created_at, first.votes, first.article_img_url,
@@ -45,12 +45,12 @@ let queryStr = `select first.author, first.article_id,
     left join comments as second on second.article_id = first.article_id 
     group by first.author, first.title, first.article_id, first.topic, 
     first.created_at, first.votes, first.article_img_url `
+
+   //  const sort_by = request.query.sort_by
  
 let queryArgs = []
 
 const promiseArray = []
-
-let queryCount = 0
 
 const validSortQueries = ["author", "title", "article_id", "topic", "created_at", "votes", "article_img_url", "count"]
 
@@ -63,7 +63,7 @@ promiseArray.unshift(db.query(queryStr, queryArgs))
 return Promise.all(promiseArray).then((results) => {
    const queryPromise = results[0]
 
-   console.log(queryPromise.rows)
+   // console.log(queryPromise.rows)
 
    return queryPromise.rows
 })
