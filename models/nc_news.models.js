@@ -18,7 +18,7 @@ exports.selectArticleById = (article_id) => {
 
 }
 
-exports.selectArticles = (sort_by, order_by) => {
+exports.selectArticles = (sort_by, order_by, topic) => {
 
 let queryStr = `select first.author, first.title, first.article_id, 
    first.topic, first.created_at, first.votes, first.article_img_url,
@@ -35,6 +35,8 @@ const validSortQueries = ["author", "title", "article_id", "topic", "created_at"
 
 const validOrderQueries = ["asc", "desc"]
 
+const validTopicQueries = ["mitch", "cats"]
+
 if(sort_by && validSortQueries.includes(sort_by)) {
    queryStr += ` order by first.${sort_by} `
 }
@@ -43,6 +45,15 @@ if(order_by && validOrderQueries.includes(order_by)) {
    queryStr += `${order_by};`
 }
 
+if(topic && validTopicQueries.includes(topic)) {
+   
+   queryStr = `select first.author, first.title, first.article_id, 
+   first.topic, first.created_at, first.votes, first.article_img_url,
+    count(second.comment_id) as count from articles as first 
+    left join comments as second on second.article_id = first.article_id
+    where first.topic = '${topic}' group by first.author, first.title, first.article_id, first.topic, 
+    first.created_at, first.votes, first.article_img_url ;`
+}
 
 promiseArray.unshift(db.query(queryStr, queryArgs))
 
@@ -51,7 +62,6 @@ return Promise.all(promiseArray).then((results) => {
 
    return queryPromise.rows
 })
-
 
 }
 
