@@ -74,9 +74,9 @@ exports.getUsers = (request, response, next) => {
 
 exports.getArticles = (request, response, next) => {
 
-    const {sort_by, order_by} = request.query
+    const {sort_by, order_by, topic} = request.query
 
-    selectArticles(sort_by, order_by).then(( articles ) => {
+    selectArticles(sort_by, order_by, topic).then(( articles ) => {
         response.status(200).send(articles)
     })
 }

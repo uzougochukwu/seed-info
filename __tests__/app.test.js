@@ -136,6 +136,38 @@ describe("GET /api/articles", () => {
           });
           expect(articles).toBeSortedBy("votes", { descending: true });
         });
+    }),    
+    test("200: Responds with an array of article objects for that topic", () => {
+      return request(app)
+        .get("/api/articles?topic=cats")
+        .expect(200)
+        .then((response) => {
+
+          const articles = response.body;
+                
+          articles.forEach((article) => {
+            expect(article.length).not.toEqual(0);
+            expect(article).toHaveProperty("author");
+            expect(article).toHaveProperty("title");
+            expect(article).toHaveProperty("article_id");
+            expect(article).toHaveProperty("topic");
+            expect(article).toHaveProperty("created_at");
+            expect(article).toHaveProperty("votes");
+            expect(article).toHaveProperty("article_img_url");
+            expect(article).toHaveProperty("count");
+          });
+          expect(response.body).toEqual([{
+            author: 'rogersop',
+            title: 'UNCOVERED: catspiracy to bring down democracy',
+            article_id: 5,
+            topic: 'cats',
+            created_at: '2020-08-03T13:14:00.000Z',
+            votes: 0,
+            article_img_url: 'https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700',
+            count: '2'
+          }]);
+
+        });
     });
 });
 
