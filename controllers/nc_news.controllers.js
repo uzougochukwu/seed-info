@@ -1,5 +1,4 @@
 
-const { response } = require("express")
 const endpointsArray = require("../endpoints.json")
 const { selectTopics,
     selectArticleById,
@@ -33,13 +32,6 @@ exports.getArticleById = (request, response, next) => {
     })
 }
 
-exports.getArticles = (request, response, next) => {
-
-    selectArticles().then(( articlesData ) => {
-        response.status(200).send({ articlesData })
-    })
-
-}
 
 exports.getCommentsByArticleId = (request, response, next) => {
     const { article_id } = request.params 
@@ -77,5 +69,14 @@ exports.getUsers = (request, response, next) => {
 
     selectUsers().then(( users ) => {
         response.status(200).send(users)
+    })
+}
+
+exports.getArticles = (request, response, next) => {
+
+    const {sort_by, order_by} = request.query
+
+    selectArticles(sort_by, order_by).then(( articles ) => {
+        response.status(200).send(articles)
     })
 }

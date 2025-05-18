@@ -1,7 +1,7 @@
 const db = require("../db/connection")
 
 exports.selectTopics = () => {
- return db.query("SELECT * FROM topics;")
+ return db.query("SELECT * FROM topics ;")
  .then(( { rows }) => {
     return rows;
  })
@@ -18,18 +18,43 @@ exports.selectArticleById = (article_id) => {
 
 }
 
-exports.selectArticles = () => {
-   return db.query(`select first.author, first.title, first.article_id, 
-      first.topic, first.created_at, first.votes, first.article_img_url,
-       count(second.comment_id) from articles as first 
-       left join comments as second on second.article_id = first.article_id 
-       group by first.author, first.title, first.article_id, first.topic, 
-       first.created_at, first.votes, first.article_img_url 
-       order by first.created_at desc;`)
-.then(( { rows }) => {
-   return rows;   
-})
+exports.selectArticles = (sort_by, order_by) => {
+
+let queryStr = `select first.author, first.title, first.article_id, 
+   first.topic, first.created_at, first.votes, first.article_img_url,
+    count(second.comment_id) as count from articles as first 
+    left join comments as second on second.article_id = first.article_id 
+    group by first.author, first.title, first.article_id, first.topic, 
+    first.created_at, first.votes, first.article_img_url `
+ 
+let queryArgs = []
+
+const promiseArray = []
+
+const validSortQueries = ["author", "title", "article_id", "topic", "created_at", "votes", "article_img_url", "count"]
+
+const validOrderQueries = ["asc", "desc"]
+
+if(sort_by && validSortQueries.includes(sort_by)) {
+   queryStr += ` order by first.${sort_by} `
 }
+
+if(order_by && validOrderQueries.includes(order_by)) {
+   queryStr += `${order_by};`
+}
+
+
+promiseArray.unshift(db.query(queryStr, queryArgs))
+
+return Promise.all(promiseArray).then((results) => {
+   const queryPromise = results[0]
+
+   return queryPromise.rows
+})
+
+
+}
+
 
 
 exports.selectCommentsByArticleId = (article_id) => {

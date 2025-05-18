@@ -7,7 +7,7 @@ const { displayAPI,
         postCommentForArticle,
         modifyVotesForArticle,
         removeComment,
-        getUsers
+        getUsers        
       } 
         = require ("./controllers/nc_news.controllers")
 const express = require("express")
@@ -24,6 +24,7 @@ app.get("/api/articles/:article_id", getArticleById)
 
 app.get("/api/articles", getArticles)
 
+
 app.get("/api/articles/:article_id/comments", getCommentsByArticleId)
 
 app.post("/api/articles/:article_id/comments", postCommentForArticle)
@@ -33,6 +34,7 @@ app.patch("/api/articles/:article_id", modifyVotesForArticle)
 app.delete("/api/comments/:comment_id", removeComment)
 
 app.get("/api/users", getUsers)
+
 
 app.use((err, req, res, next) => {
 
