@@ -122,9 +122,7 @@ describe("GET /api/articles", () => {
         .then((response) => {
 
           const articles = response.body;
-
-          console.log(articles);          
-
+                
           articles.forEach((article) => {
             expect(article.length).not.toEqual(0);
             expect(article).toHaveProperty("author");
