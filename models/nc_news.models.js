@@ -8,7 +8,6 @@ exports.selectTopics = () => {
 
 exports.selectArticleById = (article_id) => {
   
-  // if comment_count is available use
   
   return db
     .query(`select count(second.comment_id), first.author, first.title, first.article_id, first.topic, first.created_at, first.votes, first.article_img_url, first.body
