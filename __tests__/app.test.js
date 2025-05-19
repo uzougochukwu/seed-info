@@ -52,7 +52,9 @@ describe("GET /api/articles/:article_id", () => {
       .get("/api/articles/1")
       .expect(200)
       .then((response) => {
+        
         expect(response.body.article.article_id).toBe(1);
+        expect(response.body.article.count).toBe("11");
         expect(response.body.article.title).toBe(
           "Living in the shadow of a great man"
         );
