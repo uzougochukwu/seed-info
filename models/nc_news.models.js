@@ -7,16 +7,17 @@ exports.selectTopics = () => {
 };
 
 exports.selectArticleById = (article_id) => {
-  
-  
   return db
-    .query(`select count(second.comment_id), first.author, first.title, first.article_id, first.topic, first.created_at, first.votes, first.article_img_url, first.body
+    .query(
+      `select count(second.comment_id), first.author, first.title, first.article_id, first.topic, first.created_at, first.votes, first.article_img_url, first.body
   from articles first
   left join comments second
   on first.article_id = second.article_id
   where first.article_id = $1
   group by first.author, first.title, first.article_id, first.topic, first.created_at, first.votes, first.article_img_url, first.body;
-`, [article_id])
+`,
+      [article_id]
+    )
     .then((result) => {
       return result.rows[0];
     });
@@ -126,5 +127,16 @@ exports.deleteComment = (comment_id) => {
 };
 
 exports.selectUsers = () => {
-  return db.query(`select * from users;`);
+  return db.query(`select * from users;`).then((result) => {
+    return result;
+  });
+};
+
+exports.selectUserByUsername = (username) => {
+  return db
+    .query(`select username, name, avatar_url from users where username = $1;`, [username])
+    .then((result) => {
+
+      return result;
+    });
 };
