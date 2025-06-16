@@ -52,7 +52,6 @@ describe("GET /api/articles/:article_id", () => {
       .get("/api/articles/1")
       .expect(200)
       .then((response) => {
-        
         expect(response.body.article.article_id).toBe(1);
         expect(response.body.article.count).toBe("11");
         expect(response.body.article.title).toBe(
@@ -80,8 +79,7 @@ describe("GET /api/articles", () => {
       .get("/api/articles")
       .expect(200)
       .then((response) => {
-
-        const articles = response.body;        
+        const articles = response.body;
 
         articles.forEach((article) => {
           expect(article.length).not.toEqual(0);
@@ -101,7 +99,6 @@ describe("GET /api/articles", () => {
         .get("/api/articles?sort_by=votes")
         .expect(200)
         .then((response) => {
-
           const articles = response.body;
 
           articles.forEach((article) => {
@@ -122,9 +119,8 @@ describe("GET /api/articles", () => {
         .get("/api/articles?sort_by=votes&order_by=desc")
         .expect(200)
         .then((response) => {
-
           const articles = response.body;
-                
+
           articles.forEach((article) => {
             expect(article.length).not.toEqual(0);
             expect(article).toHaveProperty("author");
@@ -138,15 +134,14 @@ describe("GET /api/articles", () => {
           });
           expect(articles).toBeSortedBy("votes", { descending: true });
         });
-    }),    
+    }),
     test("200: Responds with an array of article objects for that topic", () => {
       return request(app)
         .get("/api/articles?topic=cats")
         .expect(200)
         .then((response) => {
-
           const articles = response.body;
-                
+
           articles.forEach((article) => {
             expect(article.length).not.toEqual(0);
             expect(article).toHaveProperty("author");
@@ -158,21 +153,22 @@ describe("GET /api/articles", () => {
             expect(article).toHaveProperty("article_img_url");
             expect(article).toHaveProperty("count");
           });
-          expect(response.body).toEqual([{
-            author: 'rogersop',
-            title: 'UNCOVERED: catspiracy to bring down democracy',
-            article_id: 5,
-            topic: 'cats',
-            created_at: '2020-08-03T13:14:00.000Z',
-            votes: 0,
-            article_img_url: 'https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700',
-            count: '2'
-          }]);
-
+          expect(response.body).toEqual([
+            {
+              author: "rogersop",
+              title: "UNCOVERED: catspiracy to bring down democracy",
+              article_id: 5,
+              topic: "cats",
+              created_at: "2020-08-03T13:14:00.000Z",
+              votes: 0,
+              article_img_url:
+                "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+              count: "2",
+            },
+          ]);
         });
     });
 });
-
 
 describe("GET /api/articles/:article_id/comments", () => {
   test("200: Responds with an array of comments for the given article_id", () => {
@@ -361,10 +357,10 @@ describe("Error Handling", () => {
   test("returns an error message when given a non numerical article_id", () => {
     return request(app)
       .get(`/api/articles/s`)
-      .expect(500)
+      .expect(400)
       .then((response) => {
         const errMsg = response.res.statusMessage;
-        expect(errMsg).toBe("Internal Server Error");
+        expect(errMsg).toBe("Bad Request");
       });
   });
 });
