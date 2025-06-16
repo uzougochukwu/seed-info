@@ -1,5 +1,7 @@
 Northcoders News API
 
+![Picture of the api endpoints list](./Backend-image.png)
+
 This API gives you access to all relevant articles from the Northcoders news service. It enables you to filter the information depending on your needs.
 
 The api is at this link: https://news-api-h2gt.onrender.com/api
@@ -48,4 +50,4 @@ In this file write PGDATABASE=nc_news
 The minimum version of Node.js needed is v23.8.0
 The minimum version of Postgres needed is 16.8
 
-![Picture of the api endpoints list](./Backend-image.png)
+
