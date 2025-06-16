@@ -6,8 +6,8 @@ The api is at this link: https://news-api-h2gt.onrender.com/api
 
 Use git clone on https://github.com/uzougochukwu/seed-info
 
-Then in the main folder of the repo, run 
-npm install 
+Then in the main folder of the repo, run
+npm install
 npm install pg
 npm install supertest
 
@@ -15,17 +15,17 @@ npm install jest
 npm install jest-sorted
 
 Then at the bottom of the package.json file change
-  "jest": {
-    "setupFilesAfterEnv": [
-      "jest-extended/all"
-    ]
+"jest": {
+"setupFilesAfterEnv": [
+"jest-extended/all"
+]
 
 to
 
-  "jest": {
-    "setupFilesAfterEnv": [
-      "jest-extended/all", "jest-sorted"
-    ]
+"jest": {
+"setupFilesAfterEnv": [
+"jest-extended/all", "jest-sorted"
+]
 
 Then run
 
@@ -47,3 +47,5 @@ In this file write PGDATABASE=nc_news
 
 The minimum version of Node.js needed is v23.8.0
 The minimum version of Postgres needed is 16.8
+
+![Picture of the api endpoints list](./Backend-image.png)
