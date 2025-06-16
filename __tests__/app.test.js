@@ -343,6 +343,30 @@ describe("GET /api/users", () => {
   });
 });
 
+describe("GET /api/users/:username", () => {
+  test("200: Responds with an array of a particular user when it receives a username", () => {
+    return request(app)
+      .get("/api/users/icellusedkars")
+      .expect(200)
+      .then((response) => {
+        const users = response.body.rows;
+
+        users.forEach((user) => {
+          expect(user.length).not.toEqual(0);
+          expect(user).toHaveProperty("username");
+          expect(user).toHaveProperty("name");
+          expect(user).toHaveProperty("avatar_url");
+        });
+
+        expect(response.body.rows[0].name).toEqual("sam");
+        expect(response.body.rows[0].username).toEqual("icellusedkars");
+        expect(response.body.rows[0].avatar_url).toEqual(
+          "https://avatars2.githubusercontent.com/u/24604688?s=460&v=4"
+        );
+      });
+  });
+});
+
 describe("Error Handling", () => {
   test("returns an error message when given an incorrect endpoint", () => {
     return request(app)
