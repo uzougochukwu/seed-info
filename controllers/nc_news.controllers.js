@@ -9,6 +9,7 @@ const {
   deleteComment,
   selectUsers,
   selectUserByUsername,
+  changeVotesForComment,
 } = require("../models/nc_news.models");
 const { commentData } = require("../db/data/test-data");
 
@@ -81,5 +82,14 @@ exports.getUserByUsername = (request, response, next) => {
 
   return selectUserByUsername(username).then((user) => {
     response.status(200).send(user);
+  });
+};
+
+exports.modifyVotesForComment = (request, response, next) => {
+  const { comment_id } = request.params;
+  const { inc_votes: newVote } = request.body;
+
+  return changeVotesForComment(comment_id, newVote).then((comment) => {
+    response.status(201).send({ comment });
   });
 };

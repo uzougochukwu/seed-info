@@ -107,10 +107,10 @@ exports.changeVotesForArticle = (article_id, newVote) => {
   return db
     .query(
       `update articles 
-      set votes = greatest(votes + $1, 0)
-      where article_id = $2
+      set votes = greatest(votes + $2, 0)
+      where article_id = $1
       returning *;`,
-      [newVote, article_id]
+      [article_id, newVote]
     )
     .then((result) => {
       return result.rows[0];
@@ -134,9 +134,25 @@ exports.selectUsers = () => {
 
 exports.selectUserByUsername = (username) => {
   return db
-    .query(`select username, name, avatar_url from users where username = $1;`, [username])
+    .query(
+      `select username, name, avatar_url from users where username = $1;`,
+      [username]
+    )
     .then((result) => {
-
       return result;
+    });
+};
+
+exports.changeVotesForComment = (comment_id, newVote) => {
+  return db
+    .query(
+      `update comments
+    set votes = votes + $2
+    where comment_id = $1
+    returning *;`,
+      [comment_id, newVote]
+    )
+    .then((result) => {
+      return result.rows[0];
     });
 };
