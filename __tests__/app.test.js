@@ -313,6 +313,41 @@ describe("PATCH /api/articles/:article_id", () => {
             "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700"
           );
         });
+    }),
+    test("201: Responds with the newly added article and author, title, topic, author, body, created_at, votes, article_img_url", () => {
+      const postObj = {
+        author: "rogersop",
+        title: "Is Mitch ready for the Singularity?",
+        body: "We all know Mitch likes technology, but is he willing to make way for AI? There can only be one supreme thought leader, and we all know that ChatGPT can fulfill that role perfectly.",
+        topic: "mitch",
+        article_img_url:
+          "https://bigthink.com/wp-content/uploads/2021/12/13-8_Death-and-The-Singularity_Lead.jpg",
+      };
+      return request(app)
+        .post("/api/articles")
+        .send(postObj)
+        .expect(201)
+        .then((response) => {
+          expect(response.body.article).toHaveProperty("author");
+          expect(response.body.article).toHaveProperty("title");
+          expect(response.body.article).toHaveProperty("body");
+          expect(response.body.article).toHaveProperty("topic");
+          expect(response.body.article).toHaveProperty("article_img_url");
+          expect(response.body.article).toHaveProperty("article_id");
+          expect(response.body.article).toHaveProperty("created_at");
+          expect(response.body.article).toHaveProperty("votes");
+          expect(response.body.article.author).toEqual("rogersop");
+          expect(response.body.article.title).toEqual(
+            "Is Mitch ready for the Singularity?"
+          );
+          expect(response.body.article.body).toEqual(
+            "We all know Mitch likes technology, but is he willing to make way for AI? There can only be one supreme thought leader, and we all know that ChatGPT can fulfill that role perfectly."
+          );
+          expect(response.body.article.topic).toEqual("mitch");
+          expect(response.body.article.article_img_url).toEqual(
+            "https://bigthink.com/wp-content/uploads/2021/12/13-8_Death-and-The-Singularity_Lead.jpg"
+          );
+        });
     });
 });
 
@@ -328,46 +363,43 @@ describe("DELETE /api/comments/:comment_id", () => {
 describe("PATCH /api/comments/:comment_id", () => {
   test("201: Responds with the comment after updating the votes", () => {
     const postObj = {
-      inc_votes: 2
-    }
+      inc_votes: 2,
+    };
     return request(app)
-    .patch("/api/comments/1")
-    .send(postObj)
-    .expect(201)
-    .then((response) => {
-
-      expect(response.body.comment).toEqual({
-        comment_id: 1,
-        article_id: 9,
-        body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
-        votes: 18,
-        author: 'butter_bridge',
-        created_at: '2020-04-06T12:17:00.000Z'
-      })
-      
-    })
+      .patch("/api/comments/1")
+      .send(postObj)
+      .expect(201)
+      .then((response) => {
+        expect(response.body.comment).toEqual({
+          comment_id: 1,
+          article_id: 9,
+          body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+          votes: 18,
+          author: "butter_bridge",
+          created_at: "2020-04-06T12:17:00.000Z",
+        });
+      });
   }),
-  test("201: Responds with the comment after updating the votes", () => {
-    const postObj = {
-      inc_votes: -2
-    }
-    return request(app)
-    .patch("/api/comments/1")
-    .send(postObj)
-    .expect(201)
-    .then((response) => {
-
-      expect(response.body.comment).toEqual({
-        comment_id: 1,
-        article_id: 9,
-        body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
-        votes: 14,
-        author: 'butter_bridge',
-        created_at: '2020-04-06T12:17:00.000Z'
-      })      
-    })
-  })
-})
+    test("201: Responds with the comment after updating the votes", () => {
+      const postObj = {
+        inc_votes: -2,
+      };
+      return request(app)
+        .patch("/api/comments/1")
+        .send(postObj)
+        .expect(201)
+        .then((response) => {
+          expect(response.body.comment).toEqual({
+            comment_id: 1,
+            article_id: 9,
+            body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
+            votes: 14,
+            author: "butter_bridge",
+            created_at: "2020-04-06T12:17:00.000Z",
+          });
+        });
+    });
+});
 
 describe("GET /api/users", () => {
   test("200: Responds with an array of user objects", () => {
