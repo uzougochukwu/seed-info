@@ -4,11 +4,12 @@ const {
   getCommentsByArticleId,
   postCommentForArticle,
   modifyVotesForArticle,
+  postArticle,
 } = require("../controllers/nc_news.controllers");
 
 const articlesRouter = require("express").Router();
 
-articlesRouter.route("/").get(getArticles);
+articlesRouter.route("/").get(getArticles).post(postArticle);
 
 articlesRouter
   .route("/:article_id")

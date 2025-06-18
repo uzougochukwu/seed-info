@@ -10,6 +10,7 @@ const {
   selectUsers,
   selectUserByUsername,
   changeVotesForComment,
+  addArticle,
 } = require("../models/nc_news.models");
 const { commentData } = require("../db/data/test-data");
 
@@ -92,4 +93,14 @@ exports.modifyVotesForComment = (request, response, next) => {
   return changeVotesForComment(comment_id, newVote).then((comment) => {
     response.status(201).send({ comment });
   });
+};
+
+exports.postArticle = (request, response, next) => {
+  const { author, title, body, topic, article_img_url } = request.body;
+
+  return addArticle(author, title, body, topic, article_img_url).then(
+    (article) => {
+      response.status(201).send({ article });
+    }
+  );
 };

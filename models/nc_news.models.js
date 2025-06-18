@@ -156,3 +156,16 @@ exports.changeVotesForComment = (comment_id, newVote) => {
       return result.rows[0];
     });
 };
+
+exports.addArticle = (author, title, body, topic, article_img_url) => {
+  return db
+    .query(
+      `insert into articles (author, title, body, topic, article_img_url)
+    values
+    ($1, $2, $3, $4, $5) returning *;`,
+      [author, title, body, topic, article_img_url]
+    )
+    .then((result) => {
+      return result.rows[0];
+    });
+};
