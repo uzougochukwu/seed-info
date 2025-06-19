@@ -204,10 +204,10 @@ describe("GET /api/articles", () => {
 describe("GET /api/articles/:article_id/comments", () => {
   test("200: Responds with an array of comments for the given article_id", () => {
     return request(app)
-      .get("/api/articles/3/comments")
+      .get("/api/articles/3/comments?limit=10&p=0")
       .expect(200)
       .then((response) => {
-        const comments = response.body.comment.rows;
+        const comments = response.body.comment;
 
         comments.forEach((comment) => {
           expect(comment.length).not.toEqual(0);
@@ -219,7 +219,25 @@ describe("GET /api/articles/:article_id/comments", () => {
           expect(comment).toHaveProperty("comment_id");
         });
       });
-  });
+  }),
+    test("200: Responds with an array of paginated comments for the given article_id", () => {
+      return request(app)
+        .get("/api/articles/1/comments?limit=2&p=5")
+        .expect(200)
+        .then((response) => {
+          const comments = response.body.comment.rows;
+          expect(response.body.comment).toEqual([
+            {
+              comment_id: 9,
+              article_id: 1,
+              body: "Superficially charming",
+              votes: 0,
+              author: "icellusedkars",
+              created_at: "2020-01-01T03:08:00.000Z",
+            },
+          ]);
+        });
+    });
 });
 
 describe("POST /api/articles/:article_id/comments", () => {

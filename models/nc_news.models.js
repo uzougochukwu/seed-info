@@ -84,18 +84,29 @@ exports.selectArticles = (sort_by, order_by, topic, limit, p) => {
   });
 };
 
-exports.selectCommentsByArticleId = (article_id) => {
-  return db
-    .query(
-      `select comment_id, article_id, body, votes, author,
+exports.selectCommentsByArticleId = (article_id, limit, p) => {
+  const promiseArray = [];
+
+  let queryStr = `select comment_id, article_id, body, votes, author,
        created_at from comments 
-       where article_id = $1
-       order by created_at desc; `,
-      [article_id]
-    )
-    .then((result) => {
-      return result;
-    });
+       where article_id = ${article_id}
+       order by created_at desc `;
+
+  let finalOffset = limit * p;
+
+  if (limit !== "" && p !== "") {
+    queryStr += `limit ${limit} offset ${finalOffset} ;`;
+  } else {
+    queryStr += `limit 10 offset 0;`;
+  }
+
+  promiseArray.unshift(db.query(queryStr));
+
+  return Promise.all(promiseArray).then((results) => {
+    const queryPromise = results[0];
+
+    return queryPromise.rows;
+  });
 };
 
 exports.addCommentForArticle = (article_id, username, body) => {
