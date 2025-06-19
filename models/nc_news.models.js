@@ -23,7 +23,7 @@ exports.selectArticleById = (article_id) => {
     });
 };
 
-exports.selectArticles = (sort_by, order_by, topic) => {
+exports.selectArticles = (sort_by, order_by, topic, limit, p) => {
   let queryStr = `select first.author, first.title, first.article_id, 
    first.topic, first.created_at, first.votes, first.article_img_url,
     count(second.comment_id) as count from articles as first 
@@ -55,7 +55,7 @@ exports.selectArticles = (sort_by, order_by, topic) => {
   }
 
   if (order_by && validOrderQueries.includes(order_by)) {
-    queryStr += `${order_by};`;
+    queryStr += `${order_by} `;
   }
 
   if (topic && validTopicQueries.includes(topic)) {
@@ -64,7 +64,15 @@ exports.selectArticles = (sort_by, order_by, topic) => {
     count(second.comment_id) as count from articles as first 
     left join comments as second on second.article_id = first.article_id
     where first.topic = '${topic}' group by first.author, first.title, first.article_id, first.topic, 
-    first.created_at, first.votes, first.article_img_url ;`;
+    first.created_at, first.votes, first.article_img_url `;
+  }
+
+  let finalOffset = limit * p;
+
+  if (limit !== "" && p !== "") {
+    queryStr += `limit ${limit} offset ${finalOffset} ;`;
+  } else {
+    queryStr += `limit 10 offset 0;`;
   }
 
   promiseArray.unshift(db.query(queryStr, queryArgs));
