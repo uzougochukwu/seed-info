@@ -76,7 +76,7 @@ describe("GET /api/articles/:article_id", () => {
 describe("GET /api/articles", () => {
   test("200: Responds with an array of article objects", () => {
     return request(app)
-      .get("/api/articles")
+      .get("/api/articles?limit=10&p=0")
       .expect(200)
       .then((response) => {
         const articles = response.body;
@@ -96,7 +96,7 @@ describe("GET /api/articles", () => {
   }),
     test("200: Responds with an array of sorted article objects", () => {
       return request(app)
-        .get("/api/articles?sort_by=votes")
+        .get("/api/articles?sort_by=votes&limit=10&p=0")
         .expect(200)
         .then((response) => {
           const articles = response.body;
@@ -116,7 +116,7 @@ describe("GET /api/articles", () => {
     }),
     test("200: Responds with an array of sorted article objects", () => {
       return request(app)
-        .get("/api/articles?sort_by=votes&order_by=desc")
+        .get("/api/articles?sort_by=votes&order_by=desc&limit=10&p=0")
         .expect(200)
         .then((response) => {
           const articles = response.body;
@@ -137,7 +137,7 @@ describe("GET /api/articles", () => {
     }),
     test("200: Responds with an array of article objects for that topic", () => {
       return request(app)
-        .get("/api/articles?topic=cats")
+        .get("/api/articles?topic=cats&limit=10&p=0")
         .expect(200)
         .then((response) => {
           const articles = response.body;
@@ -164,6 +164,37 @@ describe("GET /api/articles", () => {
               article_img_url:
                 "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
               count: "2",
+            },
+          ]);
+        });
+    }),
+    test("200: responds with paginated articles", () => {
+      return request(app)
+        .get("/api/articles?limit=2&p=5")
+        .expect(200)
+        .then((response) => {
+          expect(response.body).toEqual([
+            {
+              author: "icellusedkars",
+              title: "Sony Vaio; or, The Laptop",
+              article_id: 2,
+              topic: "mitch",
+              created_at: "2020-10-16T05:03:00.000Z",
+              votes: 0,
+              article_img_url:
+                "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+              count: "0",
+            },
+            {
+              author: "icellusedkars",
+              title: "Does Mitch predate civilisation?",
+              article_id: 8,
+              topic: "mitch",
+              created_at: "2020-04-17T01:08:00.000Z",
+              votes: 0,
+              article_img_url:
+                "https://images.pexels.com/photos/158651/news-newsletter-newspaper-information-158651.jpeg?w=700&h=700",
+              count: "0",
             },
           ]);
         });
