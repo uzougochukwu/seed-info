@@ -95,6 +95,8 @@ describe("GET /api/articles/:article_id", () => {
   });
 });
 
+
+
 describe("GET /api/articles", () => {
   test("200: Responds with an array of article objects", () => {
     return request(app)
@@ -221,6 +223,15 @@ describe("GET /api/articles", () => {
           ]);
         });
     });
+});
+
+describe("DELETE /api/articles/:article_id", () => {
+  test("204: Responds with no content after deletion", () => {
+    return request(app)
+      .delete("/api/articles/1")
+      .expect(204)
+      .then((response) => {});
+  });
 });
 
 describe("GET /api/articles/:article_id/comments", () => {
