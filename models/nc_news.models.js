@@ -188,3 +188,15 @@ exports.addArticle = (author, title, body, topic, article_img_url) => {
       return result.rows[0];
     });
 };
+
+exports.addTopic = (slug, description) => {
+  return db.query(
+    `insert into topics (slug, description)
+    values
+    ($1, $2) returning *;`,
+    [slug, description]
+  )
+  .then((result) => {
+    return result
+  })
+}

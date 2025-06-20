@@ -11,6 +11,7 @@ const {
   selectUserByUsername,
   changeVotesForComment,
   addArticle,
+  addTopic,
 } = require("../models/nc_news.models");
 const { commentData } = require("../db/data/test-data");
 
@@ -105,4 +106,12 @@ exports.postArticle = (request, response, next) => {
       response.status(201).send({ article });
     }
   );
+};
+
+exports.postTopic = (request, response, next) => {
+  const { slug, description } = request.body;
+
+  return addTopic(slug, description).then((topic) => {
+    response.status(201).send({ topic });
+  });
 };

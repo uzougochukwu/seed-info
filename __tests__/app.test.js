@@ -46,6 +46,28 @@ describe("GET /api/topics", () => {
   });
 });
 
+describe("POST /api/topics", () => {
+  test("201: Responds with an array of topic objects, each containing a slug and a description", () => {
+    const postObj = {
+      slug: "travel",
+      description: "Holidays and sightseeing",
+    };
+    return request(app)
+      .post("/api/topics")
+      .send(postObj)
+      .expect(201)
+      .then((response) => {
+        expect(response.body.topic.rows).toEqual([
+          {
+            slug: "travel",
+            description: "Holidays and sightseeing",
+            img_url: null,
+          },
+        ]);
+      });
+  });
+});
+
 describe("GET /api/articles/:article_id", () => {
   test("200: Responds with an array of information on that article", () => {
     return request(app)
