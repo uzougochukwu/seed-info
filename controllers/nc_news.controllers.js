@@ -12,6 +12,7 @@ const {
   changeVotesForComment,
   addArticle,
   addTopic,
+  deleteArticle,
 } = require("../models/nc_news.models");
 const { commentData } = require("../db/data/test-data");
 
@@ -113,5 +114,14 @@ exports.postTopic = (request, response, next) => {
 
   return addTopic(slug, description).then((topic) => {
     response.status(201).send({ topic });
+  });
+};
+
+exports.removeArticle = (request, response, next) => {
+  const { article_id } = request.params;
+
+  deleteArticle(article_id).then(() => {
+
+    response.status(204).send();
   });
 };

@@ -190,13 +190,28 @@ exports.addArticle = (author, title, body, topic, article_img_url) => {
 };
 
 exports.addTopic = (slug, description) => {
-  return db.query(
-    `insert into topics (slug, description)
+  return db
+    .query(
+      `insert into topics (slug, description)
     values
     ($1, $2) returning *;`,
-    [slug, description]
-  )
-  .then((result) => {
-    return result
-  })
-}
+      [slug, description]
+    )
+    .then((result) => {
+      return result;
+    });
+};
+
+exports.deleteArticle = (article_id) => {
+  return db.query(
+    `delete from comments 
+    where article_id = $1
+    returning *;`, [article_id])
+    .then(
+    db.query(
+    `delete from articles 
+    where article_id = $1
+    returning *;`,
+    [article_id]
+  ));
+};
