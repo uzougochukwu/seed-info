@@ -225,14 +225,7 @@ describe("GET /api/articles", () => {
     });
 });
 
-describe("DELETE /api/articles/:article_id", () => {
-  test("204: Responds with no content after deletion", () => {
-    return request(app)
-      .delete("/api/articles/1")
-      .expect(204)
-      .then((response) => {});
-  });
-});
+
 
 describe("GET /api/articles/:article_id/comments", () => {
   test("200: Responds with an array of comments for the given article_id", () => {
@@ -433,14 +426,16 @@ describe("PATCH /api/articles/:article_id", () => {
     });
 });
 
-describe("DELETE /api/comments/:comment_id", () => {
-  test("204: Responds with nothing after deleting comment", () => {
+describe("DELETE /api/articles/:article_id", () => {
+  test("204: Responds with no content after deletion", () => {
     return request(app)
-      .delete("/api/comments/3")
+      .delete("/api/articles/1")
       .expect(204)
       .then((response) => {});
   });
 });
+
+
 
 describe("PATCH /api/comments/:comment_id", () => {
   test("201: Responds with the comment after updating the votes", () => {
@@ -481,6 +476,15 @@ describe("PATCH /api/comments/:comment_id", () => {
           });
         });
     });
+});
+
+describe("DELETE /api/comments/:comment_id", () => {
+  test("204: Responds with nothing after deleting comment", () => {
+    return request(app)
+      .delete("/api/comments/3")
+      .expect(204)
+      .then((response) => {});
+  });
 });
 
 describe("GET /api/users", () => {
