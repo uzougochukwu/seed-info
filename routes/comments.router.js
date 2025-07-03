@@ -1,10 +1,12 @@
 const {
   removeComment,
-  modifyVotesForComment
+  modifyVotesForComment,
 } = require("../controllers/nc_news.controllers");
 
 const commentsRouter = require("express").Router();
 
-commentsRouter.route("/:comment_id").delete(removeComment).patch(modifyVotesForComment)
+commentsRouter.route("/:comment_id")
+// .delete(removeComment);
+// .patch(modifyVotesForComment)
 
-module.exports = commentsRouter
+module.exports = commentsRouter;

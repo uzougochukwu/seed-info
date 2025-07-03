@@ -136,14 +136,14 @@ exports.changeVotesForArticle = (article_id, newVote) => {
     });
 };
 
-exports.deleteComment = (comment_id) => {
-  return db.query(
-    `delete from comments
-      where comment_id = $1
-      returning *;`,
-    [comment_id]
-  );
-};
+// exports.deleteComment = (comment_id) => {
+//   return db.query(
+//     `delete from comments
+//       where comment_id = $1
+//       returning *;`,
+//     [comment_id]
+//   );
+// };
 
 exports.selectUsers = () => {
   return db.query(`select * from users;`).then((result) => {
@@ -162,19 +162,20 @@ exports.selectUserByUsername = (username) => {
     });
 };
 
-exports.changeVotesForComment = (comment_id, newVote) => {
-  return db
-    .query(
-      `update comments
-    set votes = votes + $2
-    where comment_id = $1
-    returning *;`,
-      [comment_id, newVote]
-    )
-    .then((result) => {
-      return result.rows[0];
-    });
-};
+// might need to comment out changeVotesForComment
+// exports.changeVotesForComment = (comment_id, newVote) => {
+//   return db
+//     .query(
+//       `update comments
+//     set votes = votes + $2
+//     where comment_id = $1
+//     returning *;`,
+//       [comment_id, newVote]
+//     )
+//     .then((result) => {
+//       return result.rows[0];
+//     });
+// };
 
 exports.addArticle = (author, title, body, topic, article_img_url) => {
   return db
@@ -202,16 +203,16 @@ exports.addTopic = (slug, description) => {
     });
 };
 
-exports.deleteArticle = (article_id) => {
-  return db.query(
-    `delete from comments 
-    where article_id = $1
-    returning *;`, [article_id])
-    .then(
-    db.query(
-    `delete from articles 
-    where article_id = $1
-    returning *;`,
-    [article_id]
-  ));
-};
+// exports.deleteArticle = (article_id) => {
+//   return db.query(
+//     `delete from comments 
+//     where article_id = $1
+//     returning *;`, [article_id])
+//     .then(
+//     db.query(
+//     `delete from articles 
+//     where article_id = $1
+//     returning *;`,
+//     [article_id]
+//   ));
+// };
