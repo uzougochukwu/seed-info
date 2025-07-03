@@ -60,13 +60,13 @@ exports.modifyVotesForArticle = (request, response, next) => {
   });
 };
 
-// exports.removeComment = (request, response, next) => {
-//   const { comment_id } = request.params;
+exports.removeComment = (request, response, next) => {
+  const { comment_id } = request.params;
 
-//   deleteComment(comment_id).then(() => {
-//     response.status(204).send();
-//   });
-// };
+  deleteComment(comment_id).then(() => {
+    response.status(204).send();
+  });
+};
 
 exports.getUsers = (request, response, next) => {
   return selectUsers().then((users) => {
@@ -90,14 +90,14 @@ exports.getUserByUsername = (request, response, next) => {
   });
 };
 
-// exports.modifyVotesForComment = (request, response, next) => {
-//   const { comment_id } = request.params;
-//   const { inc_votes: newVote } = request.body;
+exports.modifyVotesForComment = (request, response, next) => {
+  const { comment_id } = request.params;
+  const { inc_votes: newVote } = request.body;
 
-//   return changeVotesForComment(comment_id, newVote).then((comment) => {
-//     response.status(201).send({ comment });
-//   });
-// };
+  return changeVotesForComment(comment_id, newVote).then((comment) => {
+    response.status(201).send({ comment });
+  });
+};
 
 exports.postArticle = (request, response, next) => {
   const { author, title, body, topic, article_img_url } = request.body;
@@ -117,10 +117,10 @@ exports.postTopic = (request, response, next) => {
   });
 };
 
-// exports.removeArticle = (request, response, next) => {
-//   const { article_id } = request.params;
+exports.removeArticle = (request, response, next) => {
+  const { article_id } = request.params;
 
-//   deleteArticle(article_id).then(() => {
-//     response.status(204).send();
-//   });
-// };
+  deleteArticle(article_id).then(() => {
+    response.status(204).send();
+  });
+};

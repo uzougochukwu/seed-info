@@ -16,7 +16,7 @@ articlesRouter
   .route("/:article_id")
   .get(getArticleById)
   .patch(modifyVotesForArticle)
-  // .delete(removeArticle);
+  .delete(removeArticle);
 
 articlesRouter
   .route("/:article_id/comments")
