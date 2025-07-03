@@ -69,7 +69,8 @@ exports.selectArticles = (sort_by, order_by, topic, limit, p) => {
 
   let finalOffset = limit * p;
 
-  if (limit !== "" && p !== "") {
+  // if (limit !== "" && p !== "") {
+  if (typeof limit !== "undefined" && typeof p !== "undefined") {
     queryStr += `limit ${limit} offset ${finalOffset} ;`;
   } else {
     queryStr += `limit 10 offset 0;`;
@@ -94,7 +95,8 @@ exports.selectCommentsByArticleId = (article_id, limit, p) => {
 
   let finalOffset = limit * p;
 
-  if (limit !== "" && p !== "") {
+  // if (limit !== "" && p !== "") {
+  if (typeof limit !== "undefined" && typeof p !== "undefined") {
     queryStr += `limit ${limit} offset ${finalOffset} ;`;
   } else {
     queryStr += `limit 10 offset 0;`;
@@ -205,12 +207,12 @@ exports.addTopic = (slug, description) => {
 
 // exports.deleteArticle = (article_id) => {
 //   return db.query(
-//     `delete from comments 
+//     `delete from comments
 //     where article_id = $1
 //     returning *;`, [article_id])
 //     .then(
 //     db.query(
-//     `delete from articles 
+//     `delete from articles
 //     where article_id = $1
 //     returning *;`,
 //     [article_id]
