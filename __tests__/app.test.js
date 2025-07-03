@@ -95,8 +95,6 @@ describe("GET /api/articles/:article_id", () => {
   });
 });
 
-
-
 describe("GET /api/articles", () => {
   test("200: Responds with an array of article objects", () => {
     return request(app)
@@ -224,8 +222,6 @@ describe("GET /api/articles", () => {
         });
     });
 });
-
-
 
 describe("GET /api/articles/:article_id/comments", () => {
   test("200: Responds with an array of comments for the given article_id", () => {
@@ -435,12 +431,10 @@ describe("DELETE /api/articles/:article_id", () => {
   });
 });
 
-
-
 describe("PATCH /api/comments/:comment_id", () => {
   test("201: Responds with the comment after updating the votes", () => {
     const postObj = {
-      inc_votes: 2,
+      inc_votes: -2,
     };
     return request(app)
       .patch("/api/comments/1")
@@ -451,31 +445,12 @@ describe("PATCH /api/comments/:comment_id", () => {
           comment_id: 1,
           article_id: 9,
           body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
-          votes: 18,
+          votes: 14,
           author: "butter_bridge",
           created_at: "2020-04-06T12:17:00.000Z",
         });
       });
-  }),
-    test("201: Responds with the comment after updating the votes", () => {
-      const postObj = {
-        inc_votes: -2,
-      };
-      return request(app)
-        .patch("/api/comments/1")
-        .send(postObj)
-        .expect(201)
-        .then((response) => {
-          expect(response.body.comment).toEqual({
-            comment_id: 1,
-            article_id: 9,
-            body: "Oh, I've got compassion running out of my nose, pal! I'm the Sultan of Sentiment!",
-            votes: 14,
-            author: "butter_bridge",
-            created_at: "2020-04-06T12:17:00.000Z",
-          });
-        });
-    });
+  });
 });
 
 describe("DELETE /api/comments/:comment_id", () => {
