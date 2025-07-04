@@ -48,7 +48,7 @@ exports.selectArticles = (sort_by, order_by, topic, limit, p) => {
 
   const validOrderQueries = ["asc", "desc"];
 
-  const validTopicQueries = ["mitch", "cats"];
+  const validTopicQueries = ["mitch", "cats", "coding", "football", "cooking"];
 
   if (sort_by && validSortQueries.includes(sort_by)) {
     queryStr += ` order by first.${sort_by} `;
@@ -69,7 +69,6 @@ exports.selectArticles = (sort_by, order_by, topic, limit, p) => {
 
   let finalOffset = limit * p;
 
-  // if (limit !== "" && p !== "") {
   if (typeof limit !== "undefined" && typeof p !== "undefined") {
     queryStr += `limit ${limit} offset ${finalOffset} ;`;
   } else {
@@ -95,7 +94,6 @@ exports.selectCommentsByArticleId = (article_id, limit, p) => {
 
   let finalOffset = limit * p;
 
-  // if (limit !== "" && p !== "") {
   if (typeof limit !== "undefined" && typeof p !== "undefined") {
     queryStr += `limit ${limit} offset ${finalOffset} ;`;
   } else {
@@ -205,15 +203,19 @@ exports.addTopic = (slug, description) => {
 };
 
 exports.deleteArticle = (article_id) => {
-  return db.query(
-    `delete from comments
-    where article_id = $1
-    returning *;`, [article_id])
-    .then(
-    db.query(
-    `delete from articles
+  return db
+    .query(
+      `delete from comments
     where article_id = $1
     returning *;`,
-    [article_id]
-  ));
+      [article_id]
+    )
+    .then(
+      db.query(
+        `delete from articles
+    where article_id = $1
+    returning *;`,
+        [article_id]
+      )
+    );
 };
